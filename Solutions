@@ -2,3 +2,48 @@ SELECT *
 FROM humanresources.employee  
 ORDER BY jobtitle;
 
+SELECT e.*  
+FROM person.person AS e  
+ORDER BY LastName;
+
+SELECT firstname, lastname, businessentityid as Employee_id  
+FROM person.person AS e  
+ORDER BY lastname;
+
+SELECT productid, productnumber, name as producName
+FROM production.product
+WHERE sellstartdate IS NOT NULL
+AND production.product.productline= 'T'
+ORDER BY name;
+
+SELECT salesorderid,customerid,orderdate,subtotal,
+(taxamt*100)/subtotal AS Tax_percent
+FROM sales.salesorderheader
+ORDER BY subtotal desc;
+
+SELECT DISTINCT jobtitle  
+FROM humanresources.employee  
+ORDER BY jobtitle;
+
+SELECT customerid,sum(freight) as total_freight 
+FROM sales.salesorderheader
+group by customerid
+ORDER BY customerid ASC;
+
+SELECT customerid,salespersonid,AVG(subtotal) AS avg_subtotal,
+SUM(subtotal) AS sum_subtotal 
+FROM sales.salesorderheader 
+GROUP BY customerid,salespersonid
+ORDER BY customerid DESC;
+
+SELECT productid, sum(quantity) AS total_quantity
+FROM production.productinventory
+WHERE shelf IN ('A','C','H')
+GROUP BY productid
+HAVING SUM(quantity)>500
+ORDER BY productid;
+
+SELECT SUM(quantity) AS total_quantity
+FROM production.productinventory
+GROUP BY (locationid*10);
+
